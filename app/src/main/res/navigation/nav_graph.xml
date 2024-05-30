@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/taskDetailsFragment">
+
+    <fragment
+        android:id="@+id/taskDetailsFragment"
+        android:name="com.rafiul.whatcanido.ui.task_details.TaskDetailsFragment"
+        android:label="fragment_task_details"
+        tools:layout="@layout/fragment_task_details" />
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.rafiul.whatcanido.ui.task.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" />
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.rafiul.whatcanido.ui.statistics.StatisticsFragment"
+        android:label="fragment_statistics"
+        tools:layout="@layout/fragment_statistics" />
+    <fragment
+        android:id="@+id/addEditTaskFragment"
+        android:name="com.rafiul.whatcanido.ui.add_edit_task.AddEditTaskFragment"
+        android:label="fragment_add_edit_task"
+        tools:layout="@layout/fragment_add_edit_task" />
+</navigation>
