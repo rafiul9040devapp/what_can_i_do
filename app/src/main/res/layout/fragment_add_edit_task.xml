@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".ui.add_edit_task.AddEditTaskFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.rafiul.whatcanido.ui.add_edit_task.AddEditTaskViewModel" />
+
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
 
-</FrameLayout>
+        <EditText
+            android:id="@+id/add_task_title_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:autofillHints="false"
+            android:hint="@string/title_hint"
+            android:inputType="text"
+            android:text="@={viewmodel.title}" />
+
+
+        <EditText
+            android:id="@+id/add_task_description_edt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:autofillHints="false"
+            android:hint="@string/description_hint"
+            android:inputType="text"
+            android:text="@={viewmodel.description}" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()-> viewmodel.saveTask()}"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/add_task"
+            android:id="@+id/save_task_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+</layout>
