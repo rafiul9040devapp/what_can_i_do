@@ -8,14 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DefaultTaskRepository private constructor(application: Application) {
-    private val localDataSource: LocalDataSource
+    private val localDataSource: LocalDataSource = LocalDataSource(
+        TaskDatabase.getInstance(application.applicationContext).taskDao()
+    )
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-
-    init {
-        localDataSource = LocalDataSource(
-            TaskDatabase.getInstance(application.applicationContext).taskDao()
-        )
-    }
 
     suspend fun saveTask(task: Task) {
         withContext(ioDispatcher) {

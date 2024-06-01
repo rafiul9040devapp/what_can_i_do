@@ -3,26 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/addEditTaskFragment">
+    app:startDestination="@id/taskFragment">
 
     <fragment
         android:id="@+id/taskDetailsFragment"
         android:name="com.rafiul.whatcanido.ui.task_details.TaskDetailsFragment"
         android:label="fragment_task_details"
-        tools:layout="@layout/fragment_task_details" >
-        <action
-            android:id="@+id/action_taskDetailsFragment_to_taskFragment"
-            app:destination="@id/taskFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_task_details" />
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.rafiul.whatcanido.ui.task.TaskFragment"
         android:label="fragment_task"
-        tools:layout="@layout/fragment_task" >
-        <action
-            android:id="@+id/action_taskFragment_to_taskDetailsFragment"
-            app:destination="@id/taskDetailsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_task" />
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.rafiul.whatcanido.ui.statistics.StatisticsFragment"

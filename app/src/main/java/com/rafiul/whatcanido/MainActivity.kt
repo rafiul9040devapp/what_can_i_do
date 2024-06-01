@@ -10,58 +10,51 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
 import com.rafiul.whatcanido.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var navController: NavController
+    private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+    private lateinit var navigationView: NavigationView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        setSupportActionBar(binding.toolbar)
-        //  navController = findNavController(binding.navHostFragment.id)
-
-        setUpNavController()
-        setUpAppBar()
+        // enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
         setUpNavigationDrawer()
-        setupActionBarWithNavController(navController, binding.drawerLayout)
+        setSupportActionBar(findViewById(R.id.toolbar))
+        navController = findNavController(R.id.nav_host_fragment)
+        appBarConfigurationSetUp()
+        setupActionBarWithNavController(navController, drawerLayout)
+        navigationView.setupWithNavController(navController)
+
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    private fun setUpNavController() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-    }
-
-    private fun setUpAppBar() {
-
-        val topLevelDestinations = setOf(
-            R.id.taskFragment,
-            R.id.statisticsFragment
-        )
-
-        appBarConfiguration = AppBarConfiguration
-            .Builder(topLevelDestinations)
-            .setOpenableLayout(binding.drawerLayout)
-            .build()
+    private fun appBarConfigurationSetUp() {
+        appBarConfiguration =
+            AppBarConfiguration
+                .Builder(
+                    R.id.taskFragment,
+                    R.id.statisticsFragment,
+                    R.id.addEditTaskFragment
+                ).setOpenableLayout(drawerLayout)
+                .build()
     }
 
     private fun setUpNavigationDrawer() {
-        with(binding) {
-            navViewDrawer.setupWithNavController(navController)
-            drawerLayout.apply {
+        navigationView = findViewById(R.id.nav_view)
+        drawerLayout = findViewById<DrawerLayout?>(R.id.drawer_layout)
+            .apply {
                 setStatusBarBackground(R.color.black)
-                setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             }
-        }
     }
 }

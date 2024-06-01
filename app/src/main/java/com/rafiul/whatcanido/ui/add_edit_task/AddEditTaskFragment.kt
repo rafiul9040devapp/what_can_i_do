@@ -19,13 +19,14 @@ class AddEditTaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate<FragmentAddEditTaskBinding?>(
             layoutInflater,
             R.layout.fragment_add_edit_task,
             container,
             false
-        )
-        binding.viewmodel = viewModel
+        ).apply {
+            viewmodel = viewModel
+        }
         binding.lifecycleOwner = this.viewLifecycleOwner
         return binding.root
     }
