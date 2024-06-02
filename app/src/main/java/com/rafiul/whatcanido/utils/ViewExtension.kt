@@ -37,6 +37,7 @@ fun View.showSnackBar(
     }
 }
 
+
 @SuppressLint("SetTextI18n")
 fun TextView.showNumberOfCharacters(
     lifecycleOwner: LifecycleOwner,
@@ -47,10 +48,13 @@ fun TextView.showNumberOfCharacters(
             inVisible()
         } else {
             visible()
-            text = "${message.length} char"
+            val characterText =
+                if (message.length == 1) context.getString(R.string.character)
+                else context.getString(R.string.characters)
+
+            text = "${message.length} $characterText"
         }
     }
-
 }
 
 fun String?.toTrimString(): String {

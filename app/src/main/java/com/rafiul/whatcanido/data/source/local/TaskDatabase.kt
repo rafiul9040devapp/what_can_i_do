@@ -17,12 +17,14 @@ abstract class TaskDatabase : RoomDatabase() {
         @Synchronized
         fun getInstance(context: Context): TaskDatabase {
             return if (database == null) {
-                database =
-                    Room.databaseBuilder(context, TaskDatabase::class.java, DATABASE_NAME).build()
+                database = createDatabase(context)
                 database as TaskDatabase
             } else {
                 database as TaskDatabase
             }
         }
+
+        private fun createDatabase(context: Context) =
+            Room.databaseBuilder(context, TaskDatabase::class.java, DATABASE_NAME).build()
     }
 }

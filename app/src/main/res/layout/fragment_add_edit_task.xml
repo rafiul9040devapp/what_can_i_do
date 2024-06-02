@@ -28,6 +28,13 @@
             android:inputType="text"
             android:text="@={viewmodel.title}" />
 
+        <TextView
+            android:id="@+id/title_character_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:visibility="invisible" />
+
 
         <EditText
             android:id="@+id/add_task_description_edt"
@@ -40,15 +47,15 @@
             android:text="@={viewmodel.description}" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/save_task_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:backgroundTint="@color/colorPrimary"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{()-> viewmodel.saveTask()}"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/add_task"
-            android:id="@+id/save_task_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
+            android:text="@string/add_task" />
 
     </LinearLayout>
 </layout>

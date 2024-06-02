@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.snackbar.Snackbar
 import com.rafiul.whatcanido.R
 import com.rafiul.whatcanido.databinding.FragmentAddEditTaskBinding
+import com.rafiul.whatcanido.utils.showNumberOfCharacters
 import com.rafiul.whatcanido.utils.showSnackBar
 
 
@@ -36,9 +36,15 @@ class AddEditTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         bindSnackBar(view)
+        bindWithUI()
+    }
 
+    private fun bindWithUI() {
+        binding.titleCharacterTv.showNumberOfCharacters(
+            lifecycleOwner = viewLifecycleOwner,
+            viewModel.title
+        )
     }
 
     private fun bindSnackBar(view: View) {
