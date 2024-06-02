@@ -20,7 +20,7 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
     private val REQUIRED_TITLE_LENGTH = 6
 
     private val _snackBarMessage = MutableLiveData<Int>()
-    val snackBarMessage : LiveData<Int>
+    val snackBarMessage: LiveData<Int>
         get() = _snackBarMessage
 
     fun saveTask() {
@@ -38,7 +38,7 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun isValidTask(currentTitle: String?, currentDescription: String?): Boolean {
         return if (currentTitle.isNullOrEmpty() || currentDescription.isNullOrEmpty()) {
-             _snackBarMessage.postValue(R.string.empty_task_message)
+            _snackBarMessage.postValue(R.string.empty_task_message)
             false
         } else if (currentTitle.toTrimString().length < REQUIRED_TITLE_LENGTH) {
             _snackBarMessage.postValue(R.string.title_must_be_6_char_or_more)

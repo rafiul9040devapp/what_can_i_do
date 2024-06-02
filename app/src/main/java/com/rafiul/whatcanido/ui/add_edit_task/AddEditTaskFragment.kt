@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.google.android.material.snackbar.Snackbar
 import com.rafiul.whatcanido.R
 import com.rafiul.whatcanido.databinding.FragmentAddEditTaskBinding
+import com.rafiul.whatcanido.utils.showSnackBar
 
 
 class AddEditTaskFragment : Fragment() {
@@ -29,5 +32,20 @@ class AddEditTaskFragment : Fragment() {
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        bindSnackBar(view)
+
+    }
+
+    private fun bindSnackBar(view: View) {
+        view.showSnackBar(
+            lifecycleOwner = viewLifecycleOwner,
+            viewModel.snackBarMessage,
+            Snackbar.LENGTH_LONG
+        )
     }
 }
