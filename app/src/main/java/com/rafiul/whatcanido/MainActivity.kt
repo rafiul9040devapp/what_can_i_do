@@ -30,15 +30,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setUpNavigationDrawer()
         setSupportActionBar(findViewById(R.id.toolbar))
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfigurationSetUp()
         setupActionBarWithNavController(navController, drawerLayout)
         navigationView.setupWithNavController(navController)
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -57,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         drawerLayout = findViewById<DrawerLayout?>(R.id.drawer_layout)
             .apply {
                 setStatusBarBackground(R.color.black)
-                setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             }
         }
     }
