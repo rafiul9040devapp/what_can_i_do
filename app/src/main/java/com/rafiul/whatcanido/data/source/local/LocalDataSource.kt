@@ -1,5 +1,6 @@
 package com.rafiul.whatcanido.data.source.local
 
+import androidx.lifecycle.LiveData
 import com.rafiul.whatcanido.data.source.Task
 import com.rafiul.whatcanido.data.source.TaskDataSource
 import kotlinx.coroutines.CoroutineDispatcher
@@ -15,4 +16,7 @@ class LocalDataSource(
             taskDao.insertTask(task)
         }
     }
+
+    override fun getAllTask(): LiveData<List<Task>> = taskDao.getAllTask()
+
 }

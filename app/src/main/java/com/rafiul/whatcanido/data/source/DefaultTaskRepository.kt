@@ -1,6 +1,7 @@
 package com.rafiul.whatcanido.data.source
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import com.rafiul.whatcanido.data.source.local.LocalDataSource
 import com.rafiul.whatcanido.data.source.local.TaskDatabase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,6 +18,10 @@ class DefaultTaskRepository private constructor(application: Application) {
         withContext(ioDispatcher) {
             localDataSource.saveTask(task)
         }
+    }
+
+    fun getAllTask() : LiveData<List<Task>>{
+       return localDataSource.getAllTask()
     }
 
     companion object {
