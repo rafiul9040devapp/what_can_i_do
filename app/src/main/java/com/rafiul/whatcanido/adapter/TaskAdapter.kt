@@ -15,6 +15,7 @@ class TaskAdapter (private val viewModel: TaskViewModel) : ListAdapter<Task,Task
          fun bind(viewModel: TaskViewModel,task: Task){
              binding.viewmodel = viewModel
              binding.task = task
+             binding.executePendingBindings()
          }
          companion object{
              fun from(parent: ViewGroup) : ViewHolder{

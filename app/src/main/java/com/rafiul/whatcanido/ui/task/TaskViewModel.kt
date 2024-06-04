@@ -13,7 +13,7 @@ class TaskViewModel (private val application: Application) : AndroidViewModel(ap
     private val repository = DefaultTaskRepository.getInstance(application)
 
     private val _items: LiveData<List<Task>> = repository.getAllTask()
-    val item: LiveData<List<Task>> = _items
+    val items: LiveData<List<Task>> = _items
 
     private val _openTask = MutableLiveData<Task>()
     val openTask: LiveData<Task> = _openTask
