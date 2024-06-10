@@ -14,7 +14,11 @@
         android:id="@+id/taskFragment"
         android:name="com.rafiul.whatcanido.ui.task.TaskFragment"
         android:label="fragment_task"
-        tools:layout="@layout/fragment_task" />
+        tools:layout="@layout/fragment_task" >
+        <action
+            android:id="@+id/action_taskFragment_to_addEditTaskFragment"
+            app:destination="@id/addEditTaskFragment" />
+    </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.rafiul.whatcanido.ui.statistics.StatisticsFragment"
@@ -24,5 +28,9 @@
         android:id="@+id/addEditTaskFragment"
         android:name="com.rafiul.whatcanido.ui.add_edit_task.AddEditTaskFragment"
         android:label="fragment_add_edit_task"
-        tools:layout="@layout/fragment_add_edit_task" />
+        tools:layout="@layout/fragment_add_edit_task" >
+        <action
+            android:id="@+id/action_addEditTaskFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
 </navigation>

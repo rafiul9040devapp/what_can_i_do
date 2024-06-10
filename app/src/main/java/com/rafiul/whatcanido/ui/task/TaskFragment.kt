@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.rafiul.whatcanido.R
 import com.rafiul.whatcanido.adapter.TaskAdapter
 import com.rafiul.whatcanido.databinding.FragmentTaskBinding
@@ -22,7 +23,7 @@ class TaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate<FragmentTaskBinding>(
             layoutInflater,
             R.layout.fragment_task,
@@ -45,6 +46,10 @@ class TaskFragment : Fragment() {
             adapter = TaskAdapter(viewModel = it)
             binding.recyclerView.adapter = adapter
         }
+    }
+
+     fun navigateToAddTaskScreen(){
+        findNavController().navigate(R.id.action_taskFragment_to_addEditTaskFragment)
     }
 
 }

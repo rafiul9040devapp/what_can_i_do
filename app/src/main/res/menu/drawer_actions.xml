@@ -10,8 +10,4 @@
         android:icon="@drawable/ic_statistics"
         android:title="@string/statistics_title" />
 
-    <item
-        android:id="@+id/addEditTaskFragment"
-        android:icon="@drawable/ic_add"
-        android:title="@string/add_task" />
 </menu>

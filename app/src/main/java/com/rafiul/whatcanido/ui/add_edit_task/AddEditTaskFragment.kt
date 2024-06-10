@@ -21,7 +21,7 @@ class AddEditTaskFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate<FragmentAddEditTaskBinding?>(
             layoutInflater,
             R.layout.fragment_add_edit_task,

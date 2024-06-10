@@ -8,6 +8,10 @@
             name="viewmodel"
             type="com.rafiul.whatcanido.ui.task.TaskViewModel" />
 
+        <variable
+            name="view"
+            type="com.rafiul.whatcanido.ui.task.TaskFragment" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:onClick="@{()-> view.navigateToAddTaskScreen()}"
             android:contentDescription="@string/add_task"
             android:focusable="true"
             android:clickable="true"
