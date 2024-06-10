@@ -14,4 +14,7 @@ interface TaskDao {
 
     @Query("SELECT * FROM TASKS ORDER BY entry_id DESC")
     fun getAllTask(): LiveData<List<Task>>
+
+    @Query("SELECT * FROM TASKS WHERE entry_id = :taskId")
+    suspend fun getTaskByID(taskId: Int): Task?
 }

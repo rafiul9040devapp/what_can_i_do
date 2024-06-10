@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.rafiul.whatcanido.EventObserver
 import com.rafiul.whatcanido.R
 import com.rafiul.whatcanido.adapter.TaskAdapter
 import com.rafiul.whatcanido.databinding.FragmentTaskBinding
@@ -32,6 +32,7 @@ class TaskFragment : Fragment() {
         ).apply {
             viewmodel = taskViewModel
         }
+        binding.fragment = this
         return binding.root
     }
 
@@ -39,6 +40,19 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this.viewLifecycleOwner
         setUpTaskAdapter()
+        setUpNavigationToDetailsPage()
+
+    }
+
+    private fun setUpNavigationToDetailsPage() {
+        taskViewModel.openTask.observe(viewLifecycleOwner, EventObserver {
+            openTaskDetails(it)
+        })
+    }
+
+    private fun openTaskDetails(taskId: Int) {
+        val action = TaskFragmentDirections.actionTaskFragmentToTaskDetailsFragment(taskId)
+        findNavController().navigate(action)
     }
 
     private fun setUpTaskAdapter() {
@@ -48,7 +62,7 @@ class TaskFragment : Fragment() {
         }
     }
 
-     fun navigateToAddTaskScreen(){
+    fun navigateToAddTaskScreen() {
         findNavController().navigate(R.id.action_taskFragment_to_addEditTaskFragment)
     }
 

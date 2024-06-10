@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         val topLevelDestinations = setOf(
             R.id.taskFragment,
             R.id.statisticsFragment,
-            R.id.addEditTaskFragment
         )
     }
 

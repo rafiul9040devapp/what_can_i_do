@@ -18,5 +18,10 @@ class LocalDataSource(
     }
 
     override fun getAllTask(): LiveData<List<Task>> = taskDao.getAllTask()
+    override suspend fun observeTask(taskId: Int): Task? {
+        return withContext(ioDispatcher){
+            taskDao.getTaskByID(taskId)
+        }
+    }
 
 }

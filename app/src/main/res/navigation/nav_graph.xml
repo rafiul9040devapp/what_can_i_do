@@ -9,7 +9,14 @@
         android:id="@+id/taskDetailsFragment"
         android:name="com.rafiul.whatcanido.ui.task_details.TaskDetailsFragment"
         android:label="fragment_task_details"
-        tools:layout="@layout/fragment_task_details" />
+        tools:layout="@layout/fragment_task_details" >
+        <action
+            android:id="@+id/action_taskDetailsFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+        <argument
+            android:name="taskId"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.rafiul.whatcanido.ui.task.TaskFragment"
@@ -18,6 +25,9 @@
         <action
             android:id="@+id/action_taskFragment_to_addEditTaskFragment"
             app:destination="@id/addEditTaskFragment" />
+        <action
+            android:id="@+id/action_taskFragment_to_taskDetailsFragment"
+            app:destination="@id/taskDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
