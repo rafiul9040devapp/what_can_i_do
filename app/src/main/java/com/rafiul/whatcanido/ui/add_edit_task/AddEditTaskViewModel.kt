@@ -18,7 +18,7 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
     val description = MutableLiveData<String>()
     private val repository = DefaultTaskRepository.getInstance(application)
 
-    private val REQUIRED_TITLE_LENGTH = 6
+    private val requiredTitleLength = 6
 
     private val _snackBarMessage = MutableLiveData<Int>()
     val snackBarMessage: LiveData<Int>
@@ -45,7 +45,6 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
         if (currentTaskId != noTaskId) {
             btnName.postValue("Update Task")
         }
-
     }
 
     fun saveTask() {
@@ -58,23 +57,31 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
                 title = currentTitle.toTrimString(),
                 description = currentDescription.toTrimString()
             )
-            if (currentTaskId == noTaskId) {
-                createTask(task)
-            } else {
-                updateTask(task)
-            }
-            _operation.postValue(Event(Unit))
+            createOrUpdateTask(task)
         }
     }
 
+    private fun createOrUpdateTask(task: Task) {
+        if (currentTaskId == noTaskId) {
+            createTask(task)
+        } else {
+            updateTask(task)
+        }
+        _operation.postValue(Event(Unit))
+    }
+
     private fun isValidTask(currentTitle: String?, currentDescription: String?): Boolean {
-        return if (currentTitle.isNullOrEmpty() || currentDescription.isNullOrEmpty()) {
-            _snackBarMessage.postValue(R.string.empty_task_message)
-            false
-        } else if (currentTitle.toTrimString().length < REQUIRED_TITLE_LENGTH) {
-            _snackBarMessage.postValue(R.string.title_must_be_6_char_or_more)
-            false
-        } else true
+        return when {
+            currentTitle.isNullOrEmpty() || currentDescription.isNullOrEmpty() -> {
+                _snackBarMessage.postValue(R.string.empty_task_message)
+                false
+            }
+            currentTitle.toTrimString().length < requiredTitleLength -> {
+                _snackBarMessage.postValue(R.string.title_must_be_6_char_or_more)
+                false
+            }
+            else -> true
+        }
     }
 
     private fun createTask(task: Task) {

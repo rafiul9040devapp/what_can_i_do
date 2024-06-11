@@ -35,9 +35,7 @@ class AddEditTaskFragment : Fragment() {
             viewmodel = viewModel
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
-
         settingUpObserverForEditTask()
-
         return binding.root
     }
 
