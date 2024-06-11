@@ -7,16 +7,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 
 import com.rafiul.whatcanido.data.source.DefaultTaskRepository
+import com.rafiul.whatcanido.data.source.Task
 
 class TaskDetailsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = DefaultTaskRepository.getInstance(application)
 
-    private val _taskId = MutableLiveData<String>()
-
-    val taskId: MutableLiveData<String> = _taskId
-    fun getId(taskId:Int){
-        _taskId.postValue(taskId.toString())
+     val title = MutableLiveData<String>()
+     val description = MutableLiveData<String>()
+    fun getTaskById(taskId: Int): LiveData<Task>? {
+        return repository.getTaskById(taskId)
     }
 
 }

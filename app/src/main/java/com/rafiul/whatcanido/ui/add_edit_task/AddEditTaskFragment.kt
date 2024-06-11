@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
+import com.rafiul.whatcanido.EventObserver
 import com.rafiul.whatcanido.R
 import com.rafiul.whatcanido.databinding.FragmentAddEditTaskBinding
 import com.rafiul.whatcanido.utils.showNumberOfCharacters
@@ -17,6 +20,7 @@ import com.rafiul.whatcanido.utils.showSnackBar
 class AddEditTaskFragment : Fragment() {
 
     private lateinit var binding: FragmentAddEditTaskBinding
+    private val args by navArgs<AddEditTaskFragmentArgs>()
     private val viewModel by viewModels<AddEditTaskViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +35,9 @@ class AddEditTaskFragment : Fragment() {
             viewmodel = viewModel
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
+
+        settingUpObserverForEditTask()
+
         return binding.root
     }
 
@@ -38,12 +45,39 @@ class AddEditTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         bindSnackBar(view)
         bindWithUI()
+        setUpNavigation()
+    }
+
+    private fun settingUpObserverForEditTask() {
+        viewModel.getTaskById(args.taskId)?.let { taskObserver ->
+            taskObserver.observe(viewLifecycleOwner) { task ->
+                task?.let {
+                    viewModel.title.postValue(it.title)
+                    viewModel.description.postValue(it.description)
+                }
+            }
+        }
+    }
+
+    private fun setUpNavigation() {
+        viewModel.operation.observe(viewLifecycleOwner, EventObserver {
+            navigateToTaskScreen()
+        })
+    }
+
+    private fun navigateToTaskScreen() {
+        findNavController().navigate(R.id.action_addEditTaskFragment_to_taskFragment)
     }
 
     private fun bindWithUI() {
         binding.titleCharacterTv.showNumberOfCharacters(
             lifecycleOwner = viewLifecycleOwner,
             viewModel.title
+        )
+
+        binding.descriptionCharacterTv.showNumberOfCharacters(
+            lifecycleOwner = viewLifecycleOwner,
+            viewModel.description
         )
     }
 

@@ -28,9 +28,18 @@ class TaskDetailsFragment : Fragment() {
             viewmodel = viewModel
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
-
-        viewModel.getId(args.taskId)
-
+        settingUpObserverForEditTask()
         return view
+    }
+
+    private fun settingUpObserverForEditTask() {
+        viewModel.getTaskById(args.taskId)?.let { taskObserver ->
+            taskObserver.observe(viewLifecycleOwner) { task ->
+                task?.let {
+                    viewModel.title.postValue(it.title)
+                    viewModel.description.postValue(it.description)
+                }
+            }
+        }
     }
 }

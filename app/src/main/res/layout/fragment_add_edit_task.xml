@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.add_edit_task.AddEditTaskFragment">
 
-
     <data>
 
         <variable
@@ -46,6 +45,13 @@
             android:inputType="text"
             android:text="@={viewmodel.description}" />
 
+        <TextView
+            android:id="@+id/description_character_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:visibility="invisible" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/save_task_btn"
             android:layout_width="match_parent"
@@ -55,7 +61,7 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{()-> viewmodel.saveTask()}"
-            android:text="@string/add_task" />
+            android:text="@={viewmodel.btnName}" />
 
     </LinearLayout>
 </layout>

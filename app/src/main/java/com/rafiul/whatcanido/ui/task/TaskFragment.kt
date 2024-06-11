@@ -32,26 +32,35 @@ class TaskFragment : Fragment() {
         ).apply {
             viewmodel = taskViewModel
         }
+        binding.lifecycleOwner = this.viewLifecycleOwner
         binding.fragment = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this.viewLifecycleOwner
         setUpTaskAdapter()
-        setUpNavigationToDetailsPage()
+        setUpNavigation()
 
     }
 
-    private fun setUpNavigationToDetailsPage() {
+    private fun setUpNavigation() {
         taskViewModel.openTask.observe(viewLifecycleOwner, EventObserver {
             openTaskDetails(it)
+        })
+
+        taskViewModel.editTask.observe(viewLifecycleOwner, EventObserver {
+            editTask(it)
         })
     }
 
     private fun openTaskDetails(taskId: Int) {
         val action = TaskFragmentDirections.actionTaskFragmentToTaskDetailsFragment(taskId)
+        findNavController().navigate(action)
+    }
+
+    private fun editTask(taskId: Int) {
+        val action = TaskFragmentDirections.actionTaskFragmentToAddEditTaskFragment(taskId)
         findNavController().navigate(action)
     }
 

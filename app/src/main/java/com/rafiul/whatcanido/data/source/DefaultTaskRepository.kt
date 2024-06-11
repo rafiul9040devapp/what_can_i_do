@@ -20,15 +20,15 @@ class DefaultTaskRepository private constructor(application: Application) {
         }
     }
 
-    fun getAllTask(): LiveData<List<Task>> {
-        return localDataSource.getAllTask()
-    }
-
-    suspend fun observeTaskById(taskId: Int): Task? {
-        return withContext(ioDispatcher) {
-            localDataSource.observeTask(taskId)
+    suspend fun editTask(task: Task) {
+        withContext(ioDispatcher) {
+            localDataSource.editTask(task)
         }
     }
+
+    fun getAllTask(): LiveData<List<Task>> = localDataSource.getAllTask()
+    fun getTaskById(taskId: Int): LiveData<Task>? = localDataSource.getTaskById(taskId)
+
 
     companion object {
         private var repository: DefaultTaskRepository? = null

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="task"
             type="com.rafiul.whatcanido.data.source.Task" />
@@ -10,31 +10,43 @@
         <variable
             name="viewmodel"
             type="com.rafiul.whatcanido.ui.task.TaskViewModel" />
-
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/list_item_padding">
+        android:layout_margin="@dimen/list_item_padding"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="8dp"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{() -> viewmodel.openTaskEvent(task.id)}">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/listPreferredItemHeight"
-            android:onClick="@{()-> viewmodel.openTaskEvent(task.id)}"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/list_item_padding"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingBottom="@dimen/list_item_padding">
+            android:padding="@dimen/list_item_padding"
+            android:gravity="center_vertical">
 
             <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.MaterialComponents.Headline2"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{task.title}" />
+                android:layout_weight="1"
+                android:text="@{task.title}"
+                android:ellipsize="end"
+                android:maxLines="1" />
 
+            <com.google.android.material.button.MaterialButton
+                style="?attr/materialIconButtonFilledTonalStyle"
+                android:id="@+id/iconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewmodel.editTaskEvent(task.id)}"
+                app:icon="@drawable/ic_edit"
+                app:iconTint="@color/white"
+                app:backgroundTint="?attr/colorPrimary"
+                android:contentDescription="@string/edit_task" />
         </LinearLayout>
-
     </com.google.android.material.card.MaterialCardView>
 </layout>
