@@ -26,6 +26,12 @@ class DefaultTaskRepository private constructor(application: Application) {
         }
     }
 
+    suspend fun deleteTask(taskId: Int) {
+        withContext(ioDispatcher) {
+            localDataSource.deleteTaskById(taskId)
+        }
+    }
+
     fun getAllTask(): LiveData<List<Task>> = localDataSource.getAllTask()
     fun getTaskById(taskId: Int): LiveData<Task>? = localDataSource.getTaskById(taskId)
 

@@ -16,6 +16,9 @@ interface TaskDao {
     @Update
     suspend fun updateTask(task: Task)
 
+    @Query("DELETE FROM Tasks WHERE entry_id = :taskId")
+    suspend fun deleteTaskById(taskId: Int)
+
     @Query("SELECT * FROM TASKS ORDER BY entry_id DESC")
     fun getAllTask(): LiveData<List<Task>>
 

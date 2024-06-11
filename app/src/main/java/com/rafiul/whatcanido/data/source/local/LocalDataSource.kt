@@ -23,6 +23,12 @@ class LocalDataSource(
         }
     }
 
+    override suspend fun deleteTaskById(taskId: Int) {
+        withContext(ioDispatcher) {
+            taskDao.deleteTaskById(taskId)
+        }
+    }
+
     override fun getAllTask(): LiveData<List<Task>> = taskDao.getAllTask()
     override fun getTaskById(taskId: Int): LiveData<Task>? = taskDao.getTaskByID(taskId)
 

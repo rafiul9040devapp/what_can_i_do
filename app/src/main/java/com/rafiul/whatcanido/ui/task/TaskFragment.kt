@@ -12,6 +12,8 @@ import com.rafiul.whatcanido.EventObserver
 import com.rafiul.whatcanido.R
 import com.rafiul.whatcanido.adapter.TaskAdapter
 import com.rafiul.whatcanido.databinding.FragmentTaskBinding
+import com.rafiul.whatcanido.utils.showAlertDialog
+import com.rafiul.whatcanido.utils.showToast
 
 
 class TaskFragment : Fragment() {
@@ -41,6 +43,7 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpTaskAdapter()
         setUpNavigation()
+        setupDeleteDialog()
 
     }
 
@@ -51,6 +54,21 @@ class TaskFragment : Fragment() {
 
         taskViewModel.editTask.observe(viewLifecycleOwner, EventObserver {
             editTask(it)
+        })
+    }
+
+    private fun setupDeleteDialog() {
+        taskViewModel.showDeleteDialogEvent.observe(viewLifecycleOwner, EventObserver {
+            requireActivity().showAlertDialog(
+                title = getString(R.string.delete_task),
+                message = getString(R.string.do_you_want_to_delete_this_task),
+                positiveButtonText = getString(R.string.delete),
+                positiveAction = {
+                    taskViewModel.deleteTask(it)
+                    requireActivity().showToast(getString(R.string.task_is_deleted))
+                },
+                negativeButtonText = getString(R.string.cancel)
+            )
         })
     }
 

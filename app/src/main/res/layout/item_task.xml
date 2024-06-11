@@ -19,6 +19,7 @@
         app:cardElevation="4dp"
         app:cardCornerRadius="8dp"
         android:foreground="?attr/selectableItemBackground"
+        android:onLongClickListener="@{() -> viewmodel.onTaskLongClicked(task.id)}"
         android:onClick="@{() -> viewmodel.openTaskEvent(task.id)}">
 
         <LinearLayout
