@@ -18,32 +18,37 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
     val description = MutableLiveData<String>()
     private val repository = DefaultTaskRepository.getInstance(application)
 
-    private val requiredTitleLength = 6
+    companion object {
+        private const val REQUIRED_TITLE_LENGTH = 6
+        private const val NO_TASK_ID = 0
+    }
 
     private val _snackBarMessage = MutableLiveData<Int>()
-    val snackBarMessage: LiveData<Int>
-        get() = _snackBarMessage
+    val snackBarMessage: LiveData<Int> get() = _snackBarMessage
 
-    private val _operation = MutableLiveData<Event<Unit>>()
-    val operation: LiveData<Event<Unit>> = _operation
+    private val _taskOperationCompleted = MutableLiveData<Event<Unit>>()
+    val taskOperationCompleted: LiveData<Event<Unit>> get() = _taskOperationCompleted
 
-    private val noTaskId = 0
-    private var currentTaskId = noTaskId
-    val btnName = MutableLiveData<String>()
+    private val _btnName = MutableLiveData<String>()
+    val btnName: LiveData<String> get() = _btnName
+
+    private var currentTaskId = NO_TASK_ID
 
     init {
-        btnName.postValue("Create Task")
+        updateButtonLabel()
     }
 
     fun getTaskById(taskId: Int): LiveData<Task>? {
         currentTaskId = taskId
-        changeBtnName()
+        updateButtonLabel()
         return repository.getTaskById(taskId)
     }
 
-    private fun changeBtnName() {
-        if (currentTaskId != noTaskId) {
-            btnName.postValue("Update Task")
+    private fun updateButtonLabel() {
+        _btnName.value = if (currentTaskId == NO_TASK_ID) {
+            getApplication<Application>().getString(R.string.create_task)
+        } else {
+            getApplication<Application>().getString(R.string.update_task)
         }
     }
 
@@ -62,12 +67,12 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     private fun createOrUpdateTask(task: Task) {
-        if (currentTaskId == noTaskId) {
+        if (currentTaskId == NO_TASK_ID) {
             createTask(task)
         } else {
             updateTask(task)
         }
-        _operation.postValue(Event(Unit))
+        _taskOperationCompleted.postValue(Event(Unit))
     }
 
     private fun isValidTask(currentTitle: String?, currentDescription: String?): Boolean {
@@ -76,23 +81,33 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
                 _snackBarMessage.postValue(R.string.empty_task_message)
                 false
             }
-            currentTitle.toTrimString().length < requiredTitleLength -> {
+
+            currentTitle.toTrimString().length < REQUIRED_TITLE_LENGTH -> {
                 _snackBarMessage.postValue(R.string.title_must_be_6_char_or_more)
                 false
             }
+
             else -> true
         }
     }
 
     private fun createTask(task: Task) {
         viewModelScope.launch {
-            repository.saveTask(task)
+            try {
+                repository.saveTask(task)
+            } catch (e: Exception) {
+                _snackBarMessage.postValue(R.string.unable_to_create_task)
+            }
         }
     }
 
     private fun updateTask(task: Task) {
         viewModelScope.launch {
-            repository.editTask(task)
+            try {
+                repository.editTask(task)
+            } catch (e: Exception) {
+                _snackBarMessage.postValue(R.string.unable_to_update_task)
+            }
         }
     }
 }

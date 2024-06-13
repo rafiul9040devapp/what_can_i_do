@@ -20,7 +20,6 @@ class TaskFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskBinding
     private val taskViewModel by viewModels<TaskViewModel>()
-
     private lateinit var adapter: TaskAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +44,13 @@ class TaskFragment : Fragment() {
         setUpNavigation()
         setupDeleteDialog()
 
+    }
+
+    private fun setUpTaskAdapter() {
+        binding.viewmodel?.let {
+            adapter = TaskAdapter(viewModel = it)
+            binding.recyclerView.adapter = adapter
+        }
     }
 
     private fun setUpNavigation() {
@@ -80,13 +86,6 @@ class TaskFragment : Fragment() {
     private fun editTask(taskId: Int) {
         val action = TaskFragmentDirections.actionTaskFragmentToAddEditTaskFragment(taskId)
         findNavController().navigate(action)
-    }
-
-    private fun setUpTaskAdapter() {
-        binding.viewmodel?.let {
-            adapter = TaskAdapter(viewModel = it)
-            binding.recyclerView.adapter = adapter
-        }
     }
 
     fun navigateToAddTaskScreen() {

@@ -15,7 +15,7 @@ class TaskDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskDetailsBinding
 
-    private val args: TaskDetailsFragmentArgs by navArgs()
+    private val args by navArgs<TaskDetailsFragmentArgs>()
 
     private val viewModel by viewModels<TaskDetailsViewModel>()
     override fun onCreateView(
@@ -28,11 +28,11 @@ class TaskDetailsFragment : Fragment() {
             viewmodel = viewModel
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
-        settingUpObserverForEditTask()
+        settingUpObserver()
         return view
     }
 
-    private fun settingUpObserverForEditTask() {
+    private fun settingUpObserver() {
         viewModel.getTaskById(args.taskId)?.let { taskObserver ->
             taskObserver.observe(viewLifecycleOwner) { task ->
                 task?.let {

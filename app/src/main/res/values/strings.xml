@@ -56,5 +56,10 @@
     <string name="task_is_deleted">Task is Deleted</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="update_task">Update Task</string>
+    <string name="create_task">Create Task</string>
+    <string name="error_saving_task">Error saving task</string>
+    <string name="unable_to_update_task">Unable to update task</string>
+    <string name="unable_to_create_task">Unable to create task</string>
 
 </resources>

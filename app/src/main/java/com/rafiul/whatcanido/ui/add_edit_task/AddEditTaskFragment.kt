@@ -58,7 +58,7 @@ class AddEditTaskFragment : Fragment() {
     }
 
     private fun setUpNavigation() {
-        viewModel.operation.observe(viewLifecycleOwner, EventObserver {
+        viewModel.taskOperationCompleted.observe(viewLifecycleOwner, EventObserver {
             navigateToTaskScreen()
         })
     }

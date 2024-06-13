@@ -61,7 +61,7 @@
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{()-> viewmodel.saveTask()}"
-            android:text="@={viewmodel.btnName}" />
+            android:text="@{viewmodel.btnName}" />
 
     </LinearLayout>
 </layout>
