@@ -3,7 +3,9 @@ package com.rafiul.whatcanido.utils
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.google.android.material.snackbar.Snackbar
@@ -69,3 +71,12 @@ fun View.inVisible() {
     this.visibility = View.INVISIBLE
 }
 
+@BindingAdapter("isVisible")
+fun View.setIsVisible(visible: Boolean) {
+    visibility = if (visible) View.VISIBLE else View.GONE
+}
+
+@BindingAdapter("isSaving", "buttonText")
+fun showTextWhileSaving(button: Button, isSaving: Boolean, buttonText: String) {
+    button.text = if (isSaving) "" else buttonText
+}

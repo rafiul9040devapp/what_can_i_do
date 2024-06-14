@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.add_edit_task.AddEditTaskFragment">
 
@@ -52,16 +53,40 @@
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:visibility="invisible" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/save_task_btn"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/button_holder"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:backgroundTint="@color/colorPrimary"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="@{()-> viewmodel.saveTask()}"
-            android:text="@{viewmodel.btnName}" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/save_task_btn"
+                buttonText="@{viewmodel.btnName}"
+                isSaving="@{viewmodel.isSaving}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                android:backgroundTint="@color/colorPrimary"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{()-> viewmodel.saveTask()}"
+                android:text="@{viewmodel.btnName}"
+                app:layout_constraintBottom_toBottomOf="@id/button_holder"
+                app:layout_constraintEnd_toEndOf="@id/button_holder"
+                app:layout_constraintStart_toStartOf="@id/button_holder"
+                app:layout_constraintTop_toTopOf="@id/button_holder" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="2dp"
+                app:isVisible="@{viewmodel.isSaving}"
+                app:layout_constraintBottom_toBottomOf="@id/button_holder"
+                app:layout_constraintEnd_toEndOf="@id/button_holder"
+                app:layout_constraintStart_toStartOf="@id/button_holder"
+                app:layout_constraintTop_toTopOf="@id/button_holder" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </layout>

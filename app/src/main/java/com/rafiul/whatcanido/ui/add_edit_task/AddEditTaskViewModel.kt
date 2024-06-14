@@ -10,6 +10,7 @@ import com.rafiul.whatcanido.R
 import com.rafiul.whatcanido.data.source.DefaultTaskRepository
 import com.rafiul.whatcanido.data.source.Task
 import com.rafiul.whatcanido.utils.toTrimString
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AddEditTaskViewModel(application: Application) : AndroidViewModel(application) {
@@ -21,6 +22,7 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
     companion object {
         private const val REQUIRED_TITLE_LENGTH = 6
         private const val NO_TASK_ID = 0
+        private const val OPERATION_EXECUTION_TIME = 2000L
     }
 
     private val _snackBarMessage = MutableLiveData<Int>()
@@ -31,6 +33,10 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
 
     private val _btnName = MutableLiveData<String>()
     val btnName: LiveData<String> get() = _btnName
+
+    private val _isSaving = MutableLiveData<Boolean>()
+    val isSaving: LiveData<Boolean> get() = _isSaving
+
 
     private var currentTaskId = NO_TASK_ID
 
@@ -57,12 +63,19 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
         val currentDescription = description.value
 
         if (isValidTask(currentTitle, currentDescription)) {
+            _isSaving.postValue(true)
             val task = Task(
                 id = currentTaskId,
                 title = currentTitle.toTrimString(),
                 description = currentDescription.toTrimString()
             )
-            createOrUpdateTask(task)
+
+            viewModelScope.launch {
+                createOrUpdateTask(task)
+                delay(OPERATION_EXECUTION_TIME)
+                _isSaving.postValue(false)
+                _taskOperationCompleted.postValue(Event(Unit))
+            }
         }
     }
 
@@ -72,7 +85,6 @@ class AddEditTaskViewModel(application: Application) : AndroidViewModel(applicat
         } else {
             updateTask(task)
         }
-        _taskOperationCompleted.postValue(Event(Unit))
     }
 
     private fun isValidTask(currentTitle: String?, currentDescription: String?): Boolean {
