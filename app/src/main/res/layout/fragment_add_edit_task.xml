@@ -69,7 +69,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="@{()-> viewmodel.saveTask()}"
-                android:text="@{viewmodel.btnName}"
                 app:layout_constraintBottom_toBottomOf="@id/button_holder"
                 app:layout_constraintEnd_toEndOf="@id/button_holder"
                 app:layout_constraintStart_toStartOf="@id/button_holder"
@@ -87,6 +86,5 @@
                 app:layout_constraintTop_toTopOf="@id/button_holder" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </LinearLayout>
 </layout>
